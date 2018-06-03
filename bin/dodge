@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
+require './lib/dodge_packages'
 
-puts "test"
+DodgePackages::CLI.new.call
