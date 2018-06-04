@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+
 require './lib/dodge_packages'
+require "bundler/setup"
+require "dodge_packages"
 
 DodgePackages::CLI.new.call

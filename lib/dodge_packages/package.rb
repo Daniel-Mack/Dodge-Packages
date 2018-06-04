@@ -1,36 +1,63 @@
 class DodgePackages::Package
-  attr_accessor :name, :features, :url
+  attr_accessor :name, :features
 
-  def self.all
-    package_1 = self.new
-    package_1.name = "DODGE CHALLENGER BLACKTOP PACKAGE"
-    package_1.features = "features"
-    package_1.url = "https://www.dodge.com/challenger/packages.html"
+  def self.available
+    self.scrape_packages
+  end
 
-    package_2 = self.new
-    package_2.name = "DODGE CHALLENGER R/T CLASSIC PACKAGE"
-    package_2.features = "features"
-    package_2.url = "https://www.dodge.com/challenger/packages.html"
+  def self.scrape_packages
+    packages = []
+    packages << self.scrape_dodge_first_package
+    packages << self.scrape_dodge_second_package
+    packages << self.scrape_dodge_third_package
+    packages << self.scrape_dodge_fourth_package
+    packages
+  end
 
-    package_3 = self.new
-    package_3.name = "DODGE CHALLENGER SCAT PACK APPEARANCE GROUP"
-    package_3.features = "features"
-    package_3.url = "https://www.dodge.com/challenger/packages.html"
+  def self.scrape_dodge_first_package
+    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
 
-    package_4 = self.new
-    package_4.name = "DODGE CHARGER BLACKTOP® PACKAGE"
-    package_4.features = "features"
-    package_4.url = "https://www.dodge.com/challenger/packages.html"
+    package = self.new
+    package.name = doc.search("h4").first.text.split("\u00AE").join
+    package.features = doc.search("#feature_panel").text
+    package
+  end
 
-    package_5 = self.new
-    package_5.name = "DODGE CHARGER PLUS GROUP"
-    package_5.features = "features"
-    package_5.url = "https://www.dodge.com/challenger/packages.html"
+  def self.sanitize_message #helper method
+    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+    message_fix = doc.search("div.blurb-title").text
+    message_fix = message_fix.gsub!("\u00AE", "")
+    message_fix = message_fix.gsub!("\u00A0", ", ")
+    message_fix = message_fix.gsub!(" ,",", ")
+    message_fix = message_fix.chomp(", ")
+    message_fix = message_fix.gsub!(",  ", ", ")
+  end
 
-    package_6 = self.new
-    package_6.name = "DODGE CHARGER PREMIUM GROUP"
-    package_6.features = "features"
-    package_6.url = "https://www.dodge.com/challenger/packages.html"
-    [package_1, package_2, package_3, package_4, package_5, package_6]
+  def self.scrape_dodge_second_package
+    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+
+    package = self.new
+    package.name = doc.search("h4")[1].text
+    package.features = sanitize_message
+    package
+  end
+
+  def self.scrape_dodge_third_package
+    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+
+    package = self.new
+    package.name = doc.search("h4")[2].text
+    # package.features =
+    package
+  end
+
+    def self.scrape_dodge_fourth_package
+    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+
+    package = self.new
+    package.name = doc.search("h4")[3].text
+    # package.features =
+    package
   end
 end
+
