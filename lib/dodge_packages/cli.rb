@@ -17,7 +17,7 @@ class DodgePackages::CLI
   def selection #makes a package selection
     input = nil
     while input != "exit"
-     puts "Enter a number corresponding to a package to view it's features, type list to return to the menu or type exit to close the program."
+      puts "Enter a number corresponding to a package to view it's features, type list to return to the menu or type exit to close the program."
       input = gets.strip.downcase
       if input.to_i > 0
         a_package = @packages[input.to_i-1]
