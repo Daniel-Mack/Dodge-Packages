@@ -11,18 +11,18 @@ class DodgePackages::Package
 
   def self.challenger_scrape_packages
     packages = []
-    packages << self.scrape_dodge_first_package
-    packages << self.scrape_dodge_second_package
-    packages << self.scrape_dodge_third_package
-    packages << self.scrape_dodge_fourth_package
+    packages << self.challenger_first_package
+    packages << self.challenger_second_package
+    packages << self.challenger_third_package
+    packages << self.challenger_fourth_package
     packages
   end
 
   def self.charger_scrape_packages
     packages = []
-    packages << self.charger_scrape_dodge_first_package
-    packages << self.charger_scrape_dodge_second_package
-    packages << self.charger_scrape_dodge_third_package
+    packages << self.charger_first_package
+    packages << self.charger_second_package
+    packages << self.charger_third_package
     packages
   end
 
@@ -30,7 +30,9 @@ class DodgePackages::Package
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
   end
 
-  def self.scrape_dodge_first_package
+  #====================Challenger Scraping=====================
+
+  def self.challenger_first_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
     package = self.new
     package.name = doc.search("h4").first.text.split("\u00AE").join
@@ -38,7 +40,7 @@ class DodgePackages::Package
     package
   end
 
-  def self.scrape_dodge_second_package
+  def self.challenger_second_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
     package = self.new
     package.name = doc.search("h4")[1].text
@@ -46,7 +48,7 @@ class DodgePackages::Package
     package
   end
 
-  def self.scrape_dodge_third_package
+  def self.challenger_third_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
     package = self.new
     package.name = doc.search("h4")[2].text
@@ -54,7 +56,7 @@ class DodgePackages::Package
     package
   end
 
-  def self.scrape_dodge_fourth_package
+  def self.challenger_fourth_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
     package = self.new
     package.name = doc.search("h4")[3].text
@@ -65,7 +67,7 @@ class DodgePackages::Package
 
   #=====================Charger Version=======================
 
-  def self.charger_scrape_dodge_first_package
+  def self.charger_first_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
     package = self.new
     package.name = doc.search("h4").first.text.split("\u00AE").join
@@ -73,7 +75,7 @@ class DodgePackages::Package
     package
   end
 
-  def self.charger_scrape_dodge_second_package
+  def self.charger_second_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
     package = self.new
     package.name = doc.search("h4")[1].text
@@ -81,7 +83,7 @@ class DodgePackages::Package
     package
   end
 
-  def self.charger_scrape_dodge_third_package
+  def self.charger_third_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
     package = self.new
     package.name = doc.search("h4")[2].text
