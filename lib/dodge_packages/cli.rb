@@ -22,7 +22,7 @@ class DodgePackages::CLI
     end
   end
 
-  def pick_car
+  def pick_car # picks a vehicle
     puts "Which Dodge vehicle do you want to see packages for?"
     puts <<-DOC.gsub(" ", "")
     1. Challenger
