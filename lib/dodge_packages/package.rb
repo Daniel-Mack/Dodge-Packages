@@ -26,41 +26,41 @@ class DodgePackages::Package
     packages
   end
 
-  def self.get_doc
+  def self.challenger_doc
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
   end
 
   #====================Challenger Scraping=====================
 
   def self.challenger_first_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+    challenger_doc
     package = self.new
-    package.name = doc.search("h4").first.text.split("\u00AE").join
-    package.features = doc.search("#blurb_rail").text.gsub("\u00A0", ", ").gsub("\u00AE", "").chomp(", ")
+    package.name = challenger_doc.search("h4").first.text.split("\u00AE").join
+    package.features = challenger_doc.search("#blurb_rail").text.gsub("\u00A0", ", ").gsub("\u00AE", "").chomp(", ")
     package
   end
 
   def self.challenger_second_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+    challenger_doc
     package = self.new
-    package.name = doc.search("h4")[1].text
-    package.features = doc.search("#blurb_rail_627531141").text.gsub("2016 model shown.", "").gsub("\u00A0", ", ").gsub(" , ", ", ").chomp(", ")
+    package.name = challenger_doc.search("h4")[1].text
+    package.features = challenger_doc.search("#blurb_rail_627531141").text.gsub("2016 model shown.", "").gsub("\u00A0", ", ").gsub(" , ", ", ").chomp(", ")
     package
   end
 
   def self.challenger_third_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+    challenger_doc
     package = self.new
-    package.name = doc.search("h4")[2].text
-    package.features = doc.search("#blurb_rail_595920977").text.gsub("\u00A0", ", ").chomp(", ")
+    package.name = challenger_doc.search("h4")[2].text
+    package.features = challenger_doc.search("#blurb_rail_595920977").text.gsub("\u00A0", ", ").chomp(", ")
     package
   end
 
   def self.challenger_fourth_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
+    challenger_doc
     package = self.new
-    package.name = doc.search("h4")[3].text
-    package.features = doc.search("div#blurb_rail_595920977_1879983625").text.gsub("\u00AE", ", ").gsub("\u00A0", ", ").gsub(",  ", ", ").chomp(", ")
+    package.name = challenger_doc.search("h4")[3].text
+    package.features = challenger_doc.search("div#blurb_rail_595920977_1879983625").text.gsub("\u00AE", ", ").gsub("\u00A0", ", ").gsub(",  ", ", ").chomp(", ")
     package
   end
 
