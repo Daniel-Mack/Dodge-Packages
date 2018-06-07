@@ -26,11 +26,11 @@ class DodgePackages::Package
     packages
   end
 
+  #====================Challenger Scraping=====================
+
   def self.challenger_doc
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
   end
-
-  #====================Challenger Scraping=====================
 
   def self.challenger_first_package
     challenger_doc
@@ -64,30 +64,33 @@ class DodgePackages::Package
     package
   end
 
-
   #=====================Charger Version=======================
+
+  def self.charger_doc
+    doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
+  end
 
   def self.charger_first_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
     package = self.new
-    package.name = doc.search("h4").first.text.split("\u00AE").join
-    package.features = doc.search("#blurb_rail_1997495090").text.gsub("\u00A0", ", ").gsub("\u00C9 ", " ").chomp(", ")
+    package.name = charger_doc.search("h4").first.text.split("\u00AE").join
+    package.features = charger_doc.search("#blurb_rail_1997495090").text.gsub("\u00A0", ", ").gsub("\u00C9 ", " ").chomp(", ")
     package
   end
 
   def self.charger_second_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
     package = self.new
-    package.name = doc.search("h4")[1].text
-    package.features = doc.search("#blurb_rail_copy").text.gsub("\u00A0", ", ").gsub(" , ", ", ").chomp(", ")
+    package.name = charger_doc.search("h4")[1].text
+    package.features = charger_doc.search("#blurb_rail_copy").text.gsub("\u00A0", ", ").gsub(" , ", ", ").chomp(", ")
     package
   end
 
   def self.charger_third_package
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
     package = self.new
-    package.name = doc.search("h4")[2].text
-    package.features = doc.search("#blurb_rail").text.slice(184..469).gsub("\u00AE ", ", ").gsub("\u2122 ", ", ").gsub("\u00A0", ", ")
+    package.name = charger_doc.search("h4")[2].text
+    package.features = charger_doc.search("#blurb_rail").text.slice(184..469).gsub("\u00AE ", ", ").gsub("\u2122 ", ", ").gsub("\u00A0", ", ")
     package
   end
 end
