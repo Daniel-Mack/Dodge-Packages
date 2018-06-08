@@ -4,8 +4,6 @@ class DodgePackages::CLI
     clear_page
     puts "Welcome to the Dodge Packages Program!"
     pick_car
-    selection
-    end_program
   end
 
   def challenger_listing # lists the packages
@@ -23,21 +21,28 @@ class DodgePackages::CLI
   end
 
   def pick_car # picks a vehicle
-    puts "Which Dodge vehicle do you want to see packages for?"
+    puts "Enter a number to select a vehicle to see packages for or type exit to close the program."
     puts <<-DOC.gsub(" ", "")
     1. Challenger
     2. Charger
     DOC
-    input = gets.chomp
-    if input == "1"
-      puts "loading.."
-      split_line
-      challenger_listing
-    elsif input == "2"
-      puts "loading.."
-      split_line
-      charger_listing
-    else
+    input = nil
+    while input != "exit"
+    input = gets.strip.downcase
+      if input == "1"
+        puts "loading.."
+        split_line
+        challenger_listing
+        selection
+      elsif input == "2"
+        puts "loading.."
+        split_line
+        charger_listing
+        selection
+      elsif input == "exit"
+        exit
+      else puts "Please enter a valid option."
+      end
     end
   end
 
@@ -48,7 +53,7 @@ class DodgePackages::CLI
       puts "-------------------------------------------"
       puts "Enter a number corresponding to a package to view it's features or type exit to close the program."
       input = gets.strip.downcase
-      if input.to_i > 0
+      if input.to_i > 0 && input.to_i < 5
         a_package = @packages[input.to_i-1]
         puts "#{a_package.features}"
       elsif input == "exit"

@@ -71,7 +71,7 @@ class DodgePackages::Package
   end
 
   def self.charger_first_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
+    charger_doc
     package = self.new
     package.name = charger_doc.search("h4").first.text.split("\u00AE").join
     package.features = charger_doc.search("#blurb_rail_1997495090").text.gsub("\u00A0", ", ").gsub("\u00C9 ", " ").chomp(", ")
@@ -79,7 +79,7 @@ class DodgePackages::Package
   end
 
   def self.charger_second_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
+    charger_doc
     package = self.new
     package.name = charger_doc.search("h4")[1].text
     package.features = charger_doc.search("#blurb_rail_copy").text.gsub("\u00A0", ", ").gsub(" , ", ", ").chomp(", ")
@@ -87,7 +87,7 @@ class DodgePackages::Package
   end
 
   def self.charger_third_package
-    doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
+    charger_doc
     package = self.new
     package.name = charger_doc.search("h4")[2].text
     package.features = charger_doc.search("#blurb_rail").text.slice(184..469).gsub("\u00AE ", ", ").gsub("\u2122 ", ", ").gsub("\u00A0", ", ")
