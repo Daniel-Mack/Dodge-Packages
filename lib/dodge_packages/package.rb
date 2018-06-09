@@ -1,12 +1,17 @@
-class DodgePackages::Package
+class DodgePackages::Package #Scraper
   attr_accessor :name, :features
+
+  def self.car_names
+    charger = charger_doc.search("a.link-vehicle-name").text
+    challenger = challenger_doc.search("a.link-vehicle-name").text
+    puts "1. #{challenger}"
+    puts "2. #{charger}"
+  end
+
+  #====================Challenger Scraping=====================
 
   def self.challenger_available
     challenger_scrape_packages
-  end
-
-  def self.charger_available
-    charger_scrape_packages
   end
 
   def self.challenger_scrape_packages
@@ -14,21 +19,10 @@ class DodgePackages::Package
     packages << self.challenger_first_package
     packages << self.challenger_second_package
     packages << self.challenger_third_package
-    packages << self.challenger_fourth_package
     packages
   end
 
-  def self.charger_scrape_packages
-    packages = []
-    packages << self.charger_first_package
-    packages << self.charger_second_package
-    packages << self.charger_third_package
-    packages
-  end
-
-  #====================Challenger Scraping=====================
-
-  def self.challenger_doc
+  def self.challenger_doc #helper method
     doc = Nokogiri::HTML(open("https://www.dodge.com/challenger/packages.html"))
   end
 
@@ -56,17 +50,21 @@ class DodgePackages::Package
     package
   end
 
-  def self.challenger_fourth_package
-    challenger_doc
-    package = self.new
-    package.name = challenger_doc.search("h4")[3].text
-    package.features = challenger_doc.search("div#blurb_rail_595920977_1879983625").text.gsub("\u00AE", ", ").gsub("\u00A0", ", ").gsub(",  ", ", ").chomp(", ")
-    package
-  end
-
   #=====================Charger Version=======================
 
-  def self.charger_doc
+  def self.charger_available
+    charger_scrape_packages
+  end
+
+  def self.charger_scrape_packages
+    packages = []
+    packages << self.charger_first_package
+    packages << self.charger_second_package
+    packages << self.charger_third_package
+    packages
+  end
+
+  def self.charger_doc #helper method
     doc = Nokogiri::HTML(open("https://www.dodge.com/charger/packages.html"))
   end
 
