@@ -1,5 +1,6 @@
 class DodgePackages::CLI
 attr_reader :package
+
   def call #runs the program
     clear_page
     puts "Welcome to the Dodge Packages Program!"
